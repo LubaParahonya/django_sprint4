@@ -1,11 +1,10 @@
-from django import http
 from .models import Post, Category, Comment
 from django.utils import timezone
 from django.urls import reverse_lazy
 from .forms import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 from django.db import models
 from django.core.paginator import Paginator
 from django.forms import modelform_factory
@@ -99,7 +98,8 @@ class PostDetailView(PostMixin, DetailView):
 
     def get_object(self, queryset=None):
         post = get_object_or_404(Post, pk=self.kwargs["pk"])
-        if not post.is_published or not post.category.is_published or post.pub_date > timezone.now():
+        if not post.is_published or not \
+           post.category.is_published or post.pub_date > timezone.now():
             if self.request.user != post.author:
                 raise Http404("Post does not exist")
 
