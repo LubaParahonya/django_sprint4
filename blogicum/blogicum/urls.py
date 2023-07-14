@@ -12,12 +12,9 @@ urlpatterns = [
     path('auth/login/', CustomLoginView.as_view(), name='login'),
     path('auth/', include('django.contrib.auth.urls')),
     path('auth/registration/', CreateView.as_view(
-            template_name='registration/registration_form.html',
-            form_class=UserCreationForm,
-            success_url=reverse_lazy('pages:about'),
-        ),
-        name='registration',
-    ),
+        template_name='registration/registration_form.html',
+        form_class=UserCreationForm, success_url=reverse_lazy(
+            'pages:about'),), name='registration',),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'pages.views.page_not_found'
